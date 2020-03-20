@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import personCard from './components/StarWars';
+import PersonCard from './components/StarWars';
 import './App.css';
+
+const StyleDiv = styled.div`
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+`;
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -18,18 +24,18 @@ const App = () => {
         .then(response => {
           setData(response.data.results)
         })
-        .catch(err => console.log(err))
+        .catch(error => console.log(error))
   }, [])
   console.log(data);
 
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
-      {data && data.map(item => {
-        return(
-          < personCard name={item.name} birth_year={item.birth_year} gender={item.gender} eye_color={item.eye_color} hair_color={item.hair_color} height={item.height} mass={item.mass} />
-        )
+      <StyleDiv>
+      {data.map((item, index) => {
+        return <PersonCard key={index} name={item.name} birth_year={item.birth_year} gender={item.gender} eye_color={item.eye_color} height={item.height} mass={item.mass} />
       })}
+      </StyleDiv>
     </div>
   );
 }
